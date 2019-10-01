@@ -1,0 +1,47 @@
+{% load static %}
+{% load django_tables2 %}
+{% load bootstrap3 %}
+
+<!doctype html>
+
+<html>
+<head>
+    <title>django_tables2 with bootstrap 3 template example</title>
+    {% bootstrap_css %}
+
+    <link href="{% static 'django_tables2/bootstrap.css' %}" rel="stylesheet"/>
+
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    {% block javascript %}{% endblock %}
+
+</head>
+<body>
+    <div class="container">
+        {% block body %}
+
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="pull-right">
+                    {% if view.export_formats %}
+                    {% for format in view.export_formats %}
+                    <a class="btn btn-xs btn-default" href="{% export_url format %}">
+                        download <code>.{{ format }}</code>
+                    </a>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {% if filter %}
+                <form action="" class="form form-inline" method="get">
+                    {% bootstrap_form filter.form layout='inline' %}
+                    {% bootstrap_button 'filter' %}
+                </form>
+                {% endif %}
+            </div>
+            <div class="col-sm-10">
+                {% render_table table %}
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+</body>
+</html>
