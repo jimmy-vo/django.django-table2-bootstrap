@@ -7,5 +7,7 @@ urlpatterns = [
     path("", FilteredPersonListView.as_view(), name="filtertableview"),
     path("country/<int:pk>/", country_detail, name="country_detail"),
     path("person/<int:pk>/", person_detail, name="person_detail"),
-    path("validate_delete/", validate_delete, name='validate_delete'),
+    path("ajax_delete/", ajax_delete, name='ajax_delete'),
+    path("ajax_update/", ajax_update, name='ajax_update'),
 ]
+

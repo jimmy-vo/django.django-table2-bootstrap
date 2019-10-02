@@ -36,11 +36,37 @@ def person_detail(request, pk):
     return render(request, "person_detail.html", {"person": person})
 
 
-def validate_delete(request):
+def ajax_delete(request):
     id = request.GET.get('id', None)
     # if Person.objects.filter(id__iexact=id).exists():
     data = {
         'result': Person.objects.filter(id__iexact=id).exists()
     }
+    return JsonResponse(data)
+
+
+def ajax_update(request):
+    try:
+        id = int(request.GET.get('id', None))
+        fullname = request.GET.get('fullname', None)
+        height = float(request.GET.get('height', None))
+        country = request.GET.get('country', None)
+        if not Person.objects.filter(id=id).exists():
+            raise Exception()
+        target = Person.objects.get(id=id)
+        target.name = fullname
+        target.height = height
+        # target.country = country
+        target.save()
+
+        target = Person.objects.get(id=id)
+        data = {
+            'id': str(target.id),
+            'fullname': str(target.name),
+            'height': str(target.height),
+            'country': str(target.country),
+        }
+    except Exception as e:
+        pass
     return JsonResponse(data)
 
