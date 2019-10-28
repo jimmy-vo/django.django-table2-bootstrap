@@ -1,0 +1,24 @@
+{% extends "bootstrap_base.html" %}
+{% block title %} Logs {% endblock title %}
+{% block header %} Logs {% endblock header %}
+{% block heading %} Logs {% endblock heading %}
+
+{% block crud_table_script %}
+<script>$(document).ready(function () {
+    ajax = new CrudTable(
+        {
+            "id": {"editable": false,       "order": 0, "type": "none"},
+            "log_type_id": {"editable": true,
+                "order": 1,
+                "type": "select",
+                "href": "/log/log_type/",
+                "object": $($('#line_fk_select').find(".form-group"))[1]},
+            "date": {"editable": false,     "order": 2, "type": "input"},
+            "info": {"editable": true,     "order": 3, "type": "input"},
+        },
+        '{{ request.META.HTTP_NAME }}/log/delete',
+        '{{ request.META.HTTP_NAME }}/log/update'
+    )
+});
+</script>
+{% endblock crud_table_script %}

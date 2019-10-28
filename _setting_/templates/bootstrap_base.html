@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% load static %}
+<!--{% load bootstrap3 %}-->
+{% bootstrap_css %}
+{% load django_tables2 %}
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'style/bootstrap.css' %}" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+
+    <title>Title - {% block title %}{% endblock title %}</title>
+    <link href="{% static 'django_tables2/bootstrap.css' %}" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="{% static 'js/django_tables2_inline_crud.js' %}"></script>
+    {% block crud_table_script %}{% endblock crud_table_script %}
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+
+
+            $('.sidebar-button').each(function () {
+                $(this).removeClass("active");
+                if ($(this).find('a').attr('href') === "{{ request.path }}") {
+                    $(this).addClass("active");
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+<div class="wrapper">
+    <nav class="col-xs-120" id="sidebar">{% include 'bootstrap_sidebar.html' %}</nav>
+    <div class="col-xs-12" id="content">
+        <h1>{% block heading %}{% endblock heading %}</h1>
+        <div>{% include 'bootstrap_filter.html' %}</div>
+        <form>{% render_table table %}</form>
+    </div>
+</div>
+
+
+</body>
+
+</html>

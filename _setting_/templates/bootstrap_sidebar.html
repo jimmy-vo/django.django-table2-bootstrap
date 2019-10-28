@@ -1,0 +1,42 @@
+{% load django_tables2 %}
+
+<div class="sidebar-header" id="sidebarCollapse">
+    <h3>Title</h3>
+    <strong>TL</strong>
+</div>
+
+<ul class="list-unstyled components">
+    <li class="sidebar-button">
+        <a href="/company/"><i class="glyphicon glyphicon-briefcase"></i>Company</a>
+    </li>
+    <li class="sidebar-button active">
+        <a href="/record/"><i class="glyphicon glyphicon-usd"></i>Records</a>
+    </li>
+    <li class="sidebar-button">
+        <a href="/log/"><i class="glyphicon glyphicon-list-alt"></i>Log</a>
+    </li>
+    <li class="sidebar-button">
+        <a aria-expanded="false" data-toggle="collapse" href="#pageSubmenu">
+            <i class="glyphicon glyphicon-blackboard"></i>
+            Chart
+        </a>
+        <ul class="collapse list-unstyled" id="pageSubmenu">
+            <li class="sidebar-button"><a href="#">Chart 1</a></li>
+            <li class="sidebar-button"><a href="#">Chart 2</a></li>
+            <li class="sidebar-button"><a href="#">Chart 3</a></li>
+        </ul>
+    </li>
+</ul>
+
+<ul class="list-unstyled CTAs">
+    {% if view.export_formats %}
+    {% for format in view.export_formats %}
+    <li>
+        <a class="download" href="{% export_url format %}">
+            <i class="glyphicon glyphicon-cloud-download"></i>
+            Download<code>.{{ format }}</code>
+        </a>
+    </li>
+    {% endfor %}
+    {% endif %}
+</ul>
